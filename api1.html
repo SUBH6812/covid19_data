@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		*{
+			margin: 0;padding: 0;
+		}
+		th{
+			background-color: #000;color:#fff;
+			padding: 10px;border:1px solid #fff;font-size: 30px;padding: 10px;
+		}
+		td{
+			background-color: rgba(0,0,0,0.2);color:#00f;
+			padding: 20px;border:1px solid #fff;font-size: 20px;
+		}
+		table{text-align: center;border:1px solid #fff;width: 20%;border-collapse: collapse;margin:0px auto;}
+		h1{font-size: 60px;text-align: center;background-color: red;}
+		#demo9{float: left;font-size: 15px;padding: 5px;color:#ff0;z-index: 5;background-color: ;width: 10%;height: 50px;color: yellow;text-align: center;padding-top: 20px;}
+		#demo3{width: 100%;height: 100px;background-color:rgba(0,0,0,0.2);display: none; }
+		
+	</style>
+</head>
+<body>
+	<h1 align="center"><span id="demo9"></span><i>World Covid19 Data</i></h1>
+	<div >
+	<label>Which country you want to see the covid19 cases :</label>
+	<select id="demom" >
+		<option>choose</option>
+		
+	</select>
+	<div id="demo4">
+	<p id="demo3"></p>
+	<p id="demo6"></p>
+	</div>
+</div>
+	<p id="demo"></p>
+<script type="text/javascript">
+	fetch("https://covid-19-tracking.p.rapidapi.com/v1", {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-key": "a0d85bb344msha9616d0754a4dd0p15d071jsnb79edc25ef44",
+		"x-rapidapi-host": "covid-19-tracking.p.rapidapi.com"
+	}
+})
+		.then((apidata)=>{return apidata.json()})
+	.then((aapidata)=>{console.log(aapidata);
+		var c=aapidata;
+		console.log(c.length);
+// 		var txt="";
+// 		for(let i=0;i<c.length;i++){
+
+// txt += c[i]["Active Cases_text"]+"<br>";
+// }
+// 		document.getElementById("demo").innerHTML=txt;
+var i=0;
+
+ var table = '<table><thead><tr><th>S.NO</th><th>COUNTRY</th><th>TotalConfirmed</th><th>ActiveCases</th><th>TotalRecovered</th><th>NewConfirmed</th><th>TotalDeaths</th></tr></thead><tbody>';
+//var table = '<table><tbody>';
+for(i;i<c.length;i++){
+	table += '<tr><td>'+(i+1)+'</td><td>' +c[i].Country_text+'</td><td>'+c[i]["Total Cases_text"]+'</td><td>' +c[i]["Active Cases_text"]+'</td><td>'+c[i]["Total Recovered_text"]+'</td><td>' +c[i]["New Cases_text"]+'</td><td>'+c[i]["Total Deaths_text"]  +'</td></tr>';
+}
+table += '</tbody></table>'
+
+document.getElementById("demo").innerHTML = table;
+
+/* ******************option create************** */
+
+var sel=document.getElementById("demom");
+	
+	for(let i=0;i<c.length;i++){
+		var op =document.createElement("option");
+		var j=c[i].Country_text;
+		
+	var txt=document.createTextNode(j);
+	op.appendChild(txt);
+	sel.appendChild(op);
+
+
+}
+sel.onchange=function(){
+	document.getElementById("demo3").style.display="block";
+	for(let i=0;i<c.length;i++){
+	
+if(sel.value===c[i].Country_text){
+	document.getElementById("demo3").innerHTML="In "+c[i].Country_text+	" Total number of Confirmed covid19 cases :"+c[i]["Total Cases_text"]+	"Total number of Recovered covid19 cases  :"+c[i]["Total Recovered_text"]+"Total number of Confirmed   covid19 cases :"+c[i]["Active Cases_text"]+"Total number of Deaths   covid19 cases :"+c[i]["Total Deaths_text"]  +"Total number of NEW Confirmed   covid19 cases :"+c[i]["New Cases_text"]+".";
+	//var i=0;
+
+ var ta = '<table><thead><tr><th>S.NO</th><th>COUNTRY</th><th>TotalConfirmed</th><th>ActiveCases</th><th>TotalRecovered</th><th>NewConfirmed</th><th>TotalDeaths</th></tr></thead><tbody>';
+//var table = '<table><tbody>';
+//for(i;i<c.length;i++){
+	ta += '<tr><td>'+(i+1)+'</td><td>' +c[i].Country_text+'</td><td>'+c[i]["Total Cases_text"]+'</td><td>' +c[i]["Active Cases_text"]+'</td><td>'+c[i]["Total Recovered_text"]+'</td><td>' +c[i]["New Cases_text"]+'</td><td>'+c[i]["Total Deaths_text"]  +'</td></tr>';
+
+ta += '</tbody></table>'
+document.getElementById("demo6").innerHTML = ta;
+}}
+}
+})
+
+
+
+
+
+	.catch((error)=>{console.log(error)});
+
+
+
+
+
+</script>
+<script type="text/javascript" src="time.js"></script>
+<!-- <script type="text/javascript">
+	var i=0;
+	var x=document.getElementById("demo2");
+	x.onchange=function(){
+		for(i;i<nw.length;i++){
+if(x.value===nw[i]){
+	document.getElementById("demo3").innerHTML="COUNTRY  :"+nw[i]+"<br>"+	"TotalConfirmed  :"+age[i]+"<br>"+	"TotalRecovered  :"+dob[i];
+}
+}
+}	
+</script> -->
+<!-- <script type="text/javascript">
+	var sel=document.getElementById("demo4");
+	var op =document.createElement("option");
+	var txt=document.createTextNode();
+	op.append.Child(txt);
+	sel.append.Child(op);
+</script> -->
+</body>
+</html>
